@@ -15,3 +15,5 @@ Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/pix', [PixController::class, 'index']);
 Route::get('/login', [LoginController::class, 'index']);
 Route::get('/extrato', [BankStatementController::class, 'index']);
+
+Route::get('/teste-db', [DashboardController::class, 'testDB']);
