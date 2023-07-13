@@ -3,22 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\DB;
+use App\UseCases\AccountUseCase;
+use App\UseCases\UserUseCase;
 
 class DashboardController extends Controller
 {
+
+    public function __construct(
+        private AccountUseCase $accountUseCase,
+        private UserUseCase $userUseCase
+    ){}
+
     public function index(Request $request){
         $title = "Dashboard";
-        return view('dashboard/index',[
-            'activePath' => $request->path()
-        ]);
+        $account = $this->accountUseCase->getByUserId(1);
+        $user = $this->userUseCase->getById(1);
+        return view('dashboard/index',  array(
+            'activePath' => $request->path(),
+            'account' => $account,
+            'user' => $user
+        ));
     }
 
-    public function testDB(Request $request){
-        $data = DB::select('select * from user');
-        //$data = DB::select('select * from user where id = :id', ['id' => 1]);
-        //var_dump($data);
-        return $data;
-    }
 }
