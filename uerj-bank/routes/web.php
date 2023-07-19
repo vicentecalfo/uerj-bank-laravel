@@ -7,13 +7,12 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BankStatementController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/login');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/pix/{name?}', [PixController::class, 'index'])->middleware('auth');
 
-Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/pix', [PixController::class, 'index']);
-Route::get('/login', [LoginController::class, 'index']);
-Route::get('/extrato', [BankStatementController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/auth', [LoginController::class, 'auth'])->name('login.auth');
+Route::get('/sair', [LoginController::class, 'logout']);
 
-Route::get('/teste-db', [DashboardController::class, 'testDB']);
+Route::get('/extrato', [BankStatementController::class, 'index'])->middleware('auth');

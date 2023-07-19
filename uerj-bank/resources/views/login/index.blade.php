@@ -3,9 +3,18 @@
     <div class="card p-4">
         <div class="card-content">
             <div class="content">
-                <img src="images/UERJ-Bank-logo.png" class="logo" />
+                <img src="./images/UERJ-Bank-logo.png" class="logo" />
                 <h1 class="title is-4 has-text-centered">Acesse sua conta!</h1>
-                <form action="entrar" method="post">
+                @if($error = Session::get('error') )
+                    {{$error}}
+                @endif
+                @if($errors->any())
+                    @foreach ( $errors->all() as $error )
+                        {{ $error }}
+                    @endforeach
+                @endif
+                <form action="{{ route('login.auth') }}" method="post">
+                    @csrf
                     <div class="columns">
                         <div class="column">
                             <div class="control">
